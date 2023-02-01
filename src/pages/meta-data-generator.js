@@ -21,6 +21,7 @@ const MetaDataGenerator = () => {
   });
   const [errorMessage, setErrorMessage] = useState(null);
   const [globalTitleSuffix, setGlobalTitleSuffix] = useState(null);
+  const [renderResultsView, setRenderResultsView] = useState(false);
   const [regenerationAtWork, setRegenerationAtWork] = useState(false);
   const [requestData, setRequestData] = useState({
     numberOfUrls: 0,
@@ -31,6 +32,7 @@ const MetaDataGenerator = () => {
   const onSubmit = (data) => {
     const { urls, metaTitleSuffix } = data;
     setGlobalTitleSuffix(metaTitleSuffix);
+    setRenderResultsView(true);
     const arr = urls.split("\n").filter((n) => n);
     setRequestData((prevState) => ({
       ...prevState,
@@ -177,11 +179,8 @@ const MetaDataGenerator = () => {
           />
         </Container>
       </Section>
-      {globalTitleSuffix && (
-        <Section
-          id="results"
-          className={`THEME__border-top BLOCK__default ${globalTitleSuffix ? `` : `d-none`}`}
-        >
+      {renderResultsView && (
+        <Section id="results" className={`THEME__border-top BLOCK__default`}>
           <Container>
             <div className="mb-3 THEME__font-size-0n9 text-end">
               <span>
