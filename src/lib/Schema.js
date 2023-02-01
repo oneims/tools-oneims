@@ -5,7 +5,7 @@ export const Schema__Form__MetaDataGenerator = {
       name: "urls",
       type: "text",
       element: `textarea`,
-      placeholder: `Enter URLs to generate meta data for, one per line`,
+      placeholder: `Enter URLs to generate meta data for, one per line. Try about 15 URLs in one request`,
       validations: {
         required: {
           value: true,
@@ -22,7 +22,7 @@ export const Schema__Form__MetaDataGenerator = {
       name: "metaTitleSuffix",
       type: "text",
       element: `input`,
-      placeholder: `Add a suffix which appends at the end of the meta title (leave empty to auto generate)`,
+      placeholder: `Add a suffix which appends at the end of the meta title (leave empty to auto generate). Example: | My Awesome Company`,
       // validations: {
       //   required: {
       //     value: true,

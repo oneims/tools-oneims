@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     console.log(`HEY THERE!`, url, metaTitleSuffix);
     const prompt = `Write me a captivating meta title and meta description for ${url} ${
       metaTitleSuffix && metaTitleSuffix.length > 0
-        ? `and end the meta title with ${metaTitleSuffix}`
+        ? `and end the meta title with a suffix of ${metaTitleSuffix.trim()}`
         : ``
     }. Return these statements as a JSON Object with the structure {"metaTitle": String, "metaDescription": String}. Do not return any non-json text or numbering.`;
     console.log(`payload`, metaTitleSuffix);

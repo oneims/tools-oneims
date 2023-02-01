@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Dashboard from "@/components/wrappers/Dashboard";
 import Spinner from "@/components/core/Spinner";
 import Section from "@/components/wrappers/Section";
@@ -47,7 +47,7 @@ const MetaDataGenerator = () => {
         await axios
           .post(`${process.env.NEXT_PUBLIC_API_URL}/meta-data/generate`, payload)
           .then((res) => {
-            console.log(`response for ${arr[i]}`, res.data.data);
+            // console.log(`response for ${arr[i]}`, res.data.data);
             const data = JSON.parse(res.data.data.replace(/(^[ \t]*\n)/gm, ""));
             const metaTitle = data.metaTitle;
             const metaDescription = data.metaDescription;
@@ -105,7 +105,7 @@ const MetaDataGenerator = () => {
     const postPayload = async () => {
       const payload = {
         url,
-        globalTitleSuffix,
+        metaTitleSuffix: globalTitleSuffix,
       };
       await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/meta-data/generate`, payload)
@@ -148,7 +148,6 @@ const MetaDataGenerator = () => {
   };
 
   useEffect(() => {
-    console.log(requestData.data.length, requestData.numberOfUrls);
     if (requestData.data.length === requestData.numberOfUrls) {
       setRequestData((prevState) => ({ ...prevState, isLoading: false }));
     }
@@ -178,8 +177,11 @@ const MetaDataGenerator = () => {
           />
         </Container>
       </Section>
-      {requestData.data.length > 0 && (
-        <Section className="THEME__border-top BLOCK__default">
+      {globalTitleSuffix && (
+        <Section
+          id="results"
+          className={`THEME__border-top BLOCK__default ${globalTitleSuffix ? `` : `d-none`}`}
+        >
           <Container>
             <div className="mb-3 THEME__font-size-0n9 text-end">
               <span>
@@ -224,7 +226,7 @@ const MetaDataGenerator = () => {
                               metaDescription
                             )}
                           </td>
-                          <td className="align-middle">
+                          <td className="align-middle THEME__mw-25p">
                             <Button
                               onClick={() => regenerate(url, id)}
                               isLoading={regenerating}
@@ -232,7 +234,7 @@ const MetaDataGenerator = () => {
                                 regenerationAtWork ? `pe-none` : ``
                               }`}
                             >
-                              Regenerate
+                              {regenerating ? `Loading` : `Regenerate`}
                             </Button>
                           </td>
                         </tr>
@@ -260,8 +262,10 @@ const MetaDataGenerator = () => {
                                   <Skeleton borderRadius height={20} />
                                 </div>
                               </td>
-                              <td className="THEME__mw-50p align-middle">
-                                <Skeleton borderRadius height={30} />
+                              <td className="THEME__mw-25p align-middle">
+                                <div style={{ minWidth: "130px" }}>
+                                  <Skeleton borderRadius height={35} />
+                                </div>
                               </td>
                             </tr>
                           );
