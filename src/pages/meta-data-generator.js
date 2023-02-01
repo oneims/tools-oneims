@@ -204,7 +204,7 @@ const MetaDataGenerator = () => {
                       <React.Fragment key={id}>
                         <tr>
                           <td className={`THEME__mw-25p ${error ? `THEME__text-error` : ``}`}>
-                            <a href={url} target="_blank">
+                            <a href={url} target="_blank" rel="noreferrer">
                               {url}
                             </a>
                           </td>
