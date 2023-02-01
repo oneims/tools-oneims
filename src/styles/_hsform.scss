@@ -1,0 +1,191 @@
+$error: #e25433d4;
+.hs_cos_wrapper_type_form,
+.hs_cos_wrapper_type_blog_comments,
+.form-container,
+.systems-page {
+  // .hs-fieldtype-file {
+  //   .input {
+  //     width: 100%;
+  //     border-color: var(--theme_form-input-border-color);
+  //     padding: 0 !important;
+  //     border-style: solid;
+  //     border-width: 1px;
+  //     border-radius: 4px;
+  //     position: relative;
+  //     .HS__select-button-wrapper {
+  //       position: absolute;
+  //       top: 0;
+  //       left: 0;
+  //       right: 0;
+  //       bottom: 0;
+  //       width: 100%;
+  //       height: 100%;
+  //       padding: 0.5em;
+  //     }
+  //     input {
+  //       opacity: 0;
+  //       position: relative;
+  //       z-index: 1;
+  //       cursor: pointer;
+  //       padding: 0.5em !important;
+  //     }
+  //     &:hover {
+  //       .THEME__button-select {
+  //         background-color: darken(#f0f0f2, 5);
+  //         cursor: pointer;
+  //       }
+  //     }
+  //   }
+  // }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.5em !important;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 0.95em !important;
+    &:focus {
+      border-radius: 0;
+    }
+  }
+  textarea {
+    min-height: 65px;
+    max-height: 100px;
+  }
+  .input {
+    margin-right: 0 !important;
+  }
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: auto !important;
+  }
+  // select {
+  //   background-color: var(--white);
+  // }
+  .hs-error-msgs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85em;
+    margin: 0.45em 0 0.75em 0;
+    line-height: 1;
+    .hs-main-font-element,
+    .hs-error-msg {
+      color: $error !important;
+      font-weight: 600;
+    }
+    .hs-error-msg {
+      margin-top: 0.5em;
+    }
+    .hs-main-font-element {
+      font-size: 1em !important;
+    }
+  }
+  .hs-submit {
+    margin-top: 0.25em;
+  }
+  // .hs-button {
+  //   background-color: var(--theme_primary-color);
+  //   border: none;
+  //   color: #fff;
+  //   font-weight: 600;
+  //   transition: 0.2s ease;
+  //   font-size: 1em !important;
+  //   margin-top: 0.5em;
+  //   margin-right: 0;
+  //   padding: 0.6em 2em !important;
+  //   // width: 100%;
+  //   text-transform: unset;
+  //   cursor: pointer;
+  //   &:hover {
+  //     background-color: var(--theme_primary-color_HOVER);
+  //     transition: 0.2s ease;
+  //   }
+  // }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-appearance: none;
+    border: none;
+    border: 1px solid var(--theme_border-color);
+    background-image: url("https://3846355.fs1.hubspotusercontent-na1.net/hubfs/3846355/arrow-down-hs.svg");
+    background-repeat: no-repeat;
+    background-size: 13px;
+    background-position: 98% 50%;
+    @media (max-width: 768px) {
+      background-position: 96% 50%;
+    }
+  }
+  .hs-form-field {
+    margin-bottom: 0.5em;
+    label {
+      font-weight: 400;
+      font-size: 0.9em;
+    }
+  }
+  .submitted-message {
+    background-color: #42af50d6;
+    color: #fff;
+    padding: 0.85em;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #fff;
+    font-weight: 600;
+    border: 2px solid #34a242;
+  }
+  .form-columns-2,
+  .form-columns-1 {
+    width: 100%;
+    max-width: 100%;
+    input,
+    textarea,
+    select {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: auto !important;
+    }
+  }
+  .form-columns-2 {
+    .hs-form-field {
+      &:first-child {
+        .input {
+          @media (min-width: 480px) {
+            margin-right: 8px !important;
+          }
+        }
+      }
+    }
+  }
+  .form-columns-3 {
+    max-width: 100%;
+    input {
+      width: 100% !important;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: auto !important;
+    }
+    .hs-form-field {
+      width: 33.3333333333%;
+      &:first-child,
+      &:nth-child(2) {
+        .input {
+          @media (min-width: 480px) {
+            margin-right: 8px !important;
+          }
+        }
+      }
+    }
+  }
+}

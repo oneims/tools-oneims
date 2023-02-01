@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
@@ -9,11 +7,20 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
+    const url = req.body.url;
+    const metaTitleSuffix = req.body.metaTitleSuffix;
+    console.log(`HEY THERE!`, url, metaTitleSuffix);
+    const prompt = `Write me a captivating meta title and meta description for ${url} ${
+      metaTitleSuffix && metaTitleSuffix.length > 0
+        ? `and end the meta title with ${metaTitleSuffix}`
+        : ``
+    }. Return these statements as a JSON Object with the structure {"metaTitle": String, "metaDescription": String}. Do not return any non-json text or numbering.`;
+    console.log(`payload`, metaTitleSuffix);
     try {
       const response = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: `Write me an SEO optimized meta title and meta description for https://www.oneims.com/`,
+        prompt,
         temperature: 0.9,
         max_tokens: 150,
         top_p: 1,
@@ -24,8 +31,9 @@ export default async function handler(req, res) {
       res.status(200).json({
         success: true,
         data: response.data.choices[0].text,
-        message: "OpenAI generated an answer",
+        message: "Success",
       });
+      console.log(response.data.choices[0].text);
     } catch (error) {
       res.status(400).json({
         success: false,

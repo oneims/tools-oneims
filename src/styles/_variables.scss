@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap");
+
+:root {
+  --theme_primary-color: #32aaeb;
+  --theme_primary-color_HOVER: #268bc2;
+  --theme_primary-color_STRING: "268bc2";
+  --theme_secondary-color: #11284f;
+  --theme_secondary-color_HOVER: #0d1d38;
+  --theme_tertiary-color: #393e87;
+  --theme_tertiary-color_HOVER: #292d66;
+  --theme_primary-body-color: #33475b;
+  --theme_primary-box-shadow: 0px 3px 25px #0000001a;
+  --theme_border-color: rgb(203, 214, 226);
+  --theme_body-line-height: 1.5;
+  --theme_heading-line-height: 1.4;
+  --theme_font-family-body: "Inter Tight", sans-serif;
+  --theme_font-family-heading: "Inter Tight", sans-serif;
+  --theme_body-color: #33475b;
+  --theme_heading-color: #33475b;
+  --theme_body-color_LIGHT: rgb(81, 111, 144);
+  --theme_card-border-radius: 8px;
+  --theme_heading-default-font-weight: 700;
+  --theme_anchor-font-color: #32aaeb;
+  --theme_anchor-font-color_HOVER: #268bc2;
+  --theme_header-background-color: #fff;
+  --theme_header-background-color_HOVER: "";
+  --theme_header-nav-link-color: "";
+  --theme_header-nav-link-color_HOVER: "";
+  --theme_header-child-nav-border-color: "";
+  --theme_form-title-background-color: "";
+  --theme_form-title-font-color: "";
+  --theme_form-label-font-color: "";
+  --theme_form-help-text-font-color: #32aaeb;
+  --theme_form-input-border-color: #cbd6e2;
+  --theme_form-input-focus-border-color: #32aaeb74;
+  --theme_form-input-focus-box-shadow: 0 0 4px 1px rgb(0 208 228 / 30%),
+    0 0 0 1px var(--theme_primary-color);
+  --theme_form-input-background-color: #f5f8fa;
+  --theme_app-bg-dark: rgb(45, 62, 80);
+  --theme_app-bg-light: rgb(245, 248, 250);
+  --theme_skeleton-color: #e2e8f0;
+  --theme_success: rgb(65, 198, 65);
+  --theme_danger: rgb(214, 68, 68);
+  --white: #fff;
+}
