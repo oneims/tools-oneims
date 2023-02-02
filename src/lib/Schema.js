@@ -18,6 +18,23 @@ export const Schema__Form__MetaDataGenerator = {
       },
     },
     {
+      label: "Organization Keywords",
+      name: "organizationKeywords",
+      type: "text",
+      element: `input`,
+      placeholder: `A few words about this organization separated by a comma. Example: OneIMS, Digital Marketing Agency, SEO, HubSpot`,
+      // validations: {
+      //   required: {
+      //     value: true,
+      //     message: `Enter URLs to generate meta data for. One per line`,
+      //   },
+      //   pattern: {
+      //     value: ``,
+      //     message: `Must be only valid URLs`,
+      //   },
+      // },
+    },
+    {
       label: "Meta Title Suffix",
       name: "metaTitleSuffix",
       type: "text",

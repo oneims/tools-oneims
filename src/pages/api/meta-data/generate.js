@@ -10,12 +10,17 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const url = req.body.url;
     const metaTitleSuffix = req.body.metaTitleSuffix;
-    console.log(`HEY THERE!`, url, metaTitleSuffix);
+    const organizationKeywords = req.body.organizationKeywords;
+    console.log(`HEY THERE!`, url, metaTitleSuffix, organizationKeywords);
     const prompt = `Write me a captivating meta title and meta description for ${url} ${
       metaTitleSuffix && metaTitleSuffix.length > 0
         ? `and end the meta title with a suffix of ${metaTitleSuffix.trim()}`
         : ``
-    }. Return these statements as a JSON Object with the structure {"metaTitle": String, "metaDescription": String}. Do not return any non-json text or numbering.`;
+    }. ${
+      organizationKeywords
+        ? `Some informational keywords about the website are: ${organizationKeywords}`
+        : ``
+    } Return these statements as a JSON Object with the structure {"metaTitle": String, "metaDescription": String}. Do not return any non-json text or numbering.`;
     console.log(`payload`, metaTitleSuffix);
     try {
       const response = await openai.createCompletion({

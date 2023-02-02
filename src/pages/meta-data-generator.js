@@ -22,6 +22,7 @@ const MetaDataGenerator = () => {
   });
   const [errorMessage, setErrorMessage] = useState(null);
   const [globalTitleSuffix, setGlobalTitleSuffix] = useState(null);
+  const [globalOrganizationKeywords, setGlobalOrganizationKeywords] = useState(null);
   const [renderResultsView, setRenderResultsView] = useState(false);
   const [regenerationAtWork, setRegenerationAtWork] = useState(false);
   const [requestData, setRequestData] = useState({
@@ -39,7 +40,7 @@ const MetaDataGenerator = () => {
   };
 
   const onSubmit = (data) => {
-    const { urls, metaTitleSuffix } = data;
+    const { urls, metaTitleSuffix, organizationKeywords } = data;
     setErrorMessage(null);
     const arr = urls.split("\n").filter((n) => n);
     const isValidatedRequest = validateURLs(arr);
@@ -50,6 +51,7 @@ const MetaDataGenerator = () => {
       return false;
     }
     setGlobalTitleSuffix(metaTitleSuffix);
+    setGlobalOrganizationKeywords(organizationKeywords);
     setRenderResultsView(true);
     const results = document.querySelector("#results");
     if (results) {
@@ -68,6 +70,7 @@ const MetaDataGenerator = () => {
         const payload = {
           url: arr[i].trim(),
           metaTitleSuffix,
+          organizationKeywords,
         };
         await axios
           .post(`${process.env.NEXT_PUBLIC_API_URL}/meta-data/generate`, payload)
@@ -131,6 +134,7 @@ const MetaDataGenerator = () => {
       const payload = {
         url,
         metaTitleSuffix: globalTitleSuffix,
+        organizationKeywords: globalOrganizationKeywords,
       };
       await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/meta-data/generate`, payload)
