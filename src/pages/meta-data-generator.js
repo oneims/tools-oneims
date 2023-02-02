@@ -45,7 +45,7 @@ const MetaDataGenerator = () => {
     const isValidatedRequest = validateURLs(arr);
     if (!isValidatedRequest) {
       setErrorMessage(
-        `Lines entered: ${arr.length} -- Please verify that you are not entering more than 20 lines and each line is a valid URL with http:// or https://`
+        `Lines entered: ${arr.length} -- Please verify that not more than 20 lines are added and each line is a valid URL with http:// or https://`
       );
       return false;
     }
