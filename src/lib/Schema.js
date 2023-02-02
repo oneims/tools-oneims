@@ -5,7 +5,7 @@ export const Schema__Form__MetaDataGenerator = {
       name: "urls",
       type: "text",
       element: `textarea`,
-      placeholder: `Enter URLs to generate meta data for, one per line. Try about 15 URLs in one request`,
+      placeholder: `Enter URLs to generate meta data for, one per line. 20 maximum lines allowed in one request.`,
       validations: {
         required: {
           value: true,

@@ -9,6 +9,7 @@ import { Schema__Form__MetaDataGenerator, Schema__Generic_Variables } from "@/li
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import Button from "@/components/core/Button";
+import { validateURL } from "@/lib/Helpers";
 
 const MetaDataGenerator = () => {
   const {
@@ -29,11 +30,33 @@ const MetaDataGenerator = () => {
     data: [],
   });
 
+  const validateURLs = (arr) => {
+    if (arr.length > 20) return false;
+    for (let i = 0; i < arr.length; i++) {
+      if (!validateURL(arr[i])) return false;
+    }
+    return true;
+  };
+
   const onSubmit = (data) => {
     const { urls, metaTitleSuffix } = data;
+    setErrorMessage(null);
+    const arr = urls.split("\n").filter((n) => n);
+    const isValidatedRequest = validateURLs(arr);
+    if (!isValidatedRequest) {
+      setErrorMessage(
+        `Lines entered: ${arr.length} -- Please verify that you are not entering more than 20 lines and each line is a valid URL with http:// or https://`
+      );
+      return false;
+    }
     setGlobalTitleSuffix(metaTitleSuffix);
     setRenderResultsView(true);
-    const arr = urls.split("\n").filter((n) => n);
+    const results = document.querySelector("#results");
+    if (results) {
+      setTimeout(() => {
+        results.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 200);
+    }
     setRequestData((prevState) => ({
       ...prevState,
       isLoading: true,
@@ -179,105 +202,107 @@ const MetaDataGenerator = () => {
           />
         </Container>
       </Section>
-      {renderResultsView && (
-        <Section id="results" className={`THEME__border-top BLOCK__default`}>
-          <Container>
-            <div className="mb-3 THEME__font-size-0n9 text-end">
-              <span>
-                {requestData.data.length} of {requestData.numberOfUrls} URLs completed
-              </span>
-            </div>
-            <div className="MODULE__table-wrapper">
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">URL</th>
-                    <th scope="col">Meta Title</th>
-                    <th scope="col">Meta Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {requestData.data.map((elem) => {
-                    const { url, metaTitle, metaDescription, id, error, regenerating } = elem;
-                    return (
-                      <React.Fragment key={id}>
-                        <tr>
-                          <td className={`THEME__mw-25p ${error ? `THEME__text-error` : ``}`}>
-                            <a href={url} target="_blank" rel="noreferrer">
-                              {url}
-                            </a>
-                          </td>
-                          <td className={`THEME__mw-25p ${error ? `THEME__text-error` : ``}`}>
-                            {regenerating ? <Skeleton borderRadius height={25} /> : metaTitle}
-                          </td>
-                          <td className={`THEME__mw-50p ${error ? `THEME__text-error` : ``}`}>
-                            {regenerating ? (
-                              <>
-                                <Skeleton borderRadius height={20} />
-                                <div style={{ maxWidth: "80%" }}>
+      <div id="results">
+        {renderResultsView && (
+          <Section className={`THEME__border-top BLOCK__default`}>
+            <Container>
+              <div className="mb-3 THEME__font-size-0n9 text-end">
+                <span>
+                  {requestData.data.length} of {requestData.numberOfUrls} URLs completed
+                </span>
+              </div>
+              <div className="MODULE__table-wrapper">
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">URL</th>
+                      <th scope="col">Meta Title</th>
+                      <th scope="col">Meta Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {requestData.data.map((elem) => {
+                      const { url, metaTitle, metaDescription, id, error, regenerating } = elem;
+                      return (
+                        <React.Fragment key={id}>
+                          <tr>
+                            <td className={`THEME__mw-25p ${error ? `THEME__text-error` : ``}`}>
+                              <a href={url} target="_blank" rel="noreferrer">
+                                {url}
+                              </a>
+                            </td>
+                            <td className={`THEME__mw-25p ${error ? `THEME__text-error` : ``}`}>
+                              {regenerating ? <Skeleton borderRadius height={25} /> : metaTitle}
+                            </td>
+                            <td className={`THEME__mw-50p ${error ? `THEME__text-error` : ``}`}>
+                              {regenerating ? (
+                                <>
                                   <Skeleton borderRadius height={20} />
-                                </div>
-                                <div style={{ maxWidth: "60%" }}>
+                                  <div style={{ maxWidth: "80%" }}>
+                                    <Skeleton borderRadius height={20} />
+                                  </div>
+                                  <div style={{ maxWidth: "60%" }}>
+                                    <Skeleton borderRadius height={20} />
+                                  </div>
+                                </>
+                              ) : (
+                                metaDescription
+                              )}
+                            </td>
+                            <td className="align-middle THEME__mw-25p">
+                              <Button
+                                onClick={() => regenerate(url, id)}
+                                isLoading={regenerating}
+                                className={`THEME__font-size-0n8 ${
+                                  regenerationAtWork || requestData.isLoading ? `pe-none` : ``
+                                }`}
+                              >
+                                {regenerating ? `Loading` : `Regenerate`}
+                              </Button>
+                            </td>
+                          </tr>
+                        </React.Fragment>
+                      );
+                    })}
+                    {requestData.isLoading && (
+                      <>
+                        {[...Array(requestData.numberOfUrls - requestData.data.length)].map(
+                          (elem, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="THEME__mw-25p">
+                                  <Skeleton borderRadius height={25} />
+                                </td>
+                                <td className="THEME__mw-25p">
+                                  <Skeleton borderRadius height={25} />
+                                </td>
+                                <td className="THEME__mw-50p">
                                   <Skeleton borderRadius height={20} />
-                                </div>
-                              </>
-                            ) : (
-                              metaDescription
-                            )}
-                          </td>
-                          <td className="align-middle THEME__mw-25p">
-                            <Button
-                              onClick={() => regenerate(url, id)}
-                              isLoading={regenerating}
-                              className={`THEME__font-size-0n8 ${
-                                regenerationAtWork ? `pe-none` : ``
-                              }`}
-                            >
-                              {regenerating ? `Loading` : `Regenerate`}
-                            </Button>
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    );
-                  })}
-                  {requestData.isLoading && (
-                    <>
-                      {[...Array(requestData.numberOfUrls - requestData.data.length)].map(
-                        (elem, index) => {
-                          return (
-                            <tr key={index}>
-                              <td className="THEME__mw-25p">
-                                <Skeleton borderRadius height={25} />
-                              </td>
-                              <td className="THEME__mw-25p">
-                                <Skeleton borderRadius height={25} />
-                              </td>
-                              <td className="THEME__mw-50p">
-                                <Skeleton borderRadius height={20} />
-                                <div style={{ maxWidth: "80%" }}>
-                                  <Skeleton borderRadius height={20} />
-                                </div>
-                                <div style={{ maxWidth: "60%" }}>
-                                  <Skeleton borderRadius height={20} />
-                                </div>
-                              </td>
-                              <td className="THEME__mw-25p align-middle">
-                                <div style={{ minWidth: "130px" }}>
-                                  <Skeleton borderRadius height={35} />
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        }
-                      )}
-                    </>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </Container>
-        </Section>
-      )}
+                                  <div style={{ maxWidth: "80%" }}>
+                                    <Skeleton borderRadius height={20} />
+                                  </div>
+                                  <div style={{ maxWidth: "60%" }}>
+                                    <Skeleton borderRadius height={20} />
+                                  </div>
+                                </td>
+                                <td className="THEME__mw-25p align-middle">
+                                  <div style={{ minWidth: "130px" }}>
+                                    <Skeleton borderRadius height={35} />
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )}
+                      </>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </Container>
+          </Section>
+        )}
+      </div>
     </Dashboard>
   );
 };

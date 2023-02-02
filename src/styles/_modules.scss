@@ -1267,6 +1267,9 @@
         border: 1px solid var(--theme_danger);
         border-radius: 4px;
         color: #fff;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
       }
       &-success {
         background-color: #e6f8f6;
